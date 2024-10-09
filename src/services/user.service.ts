@@ -10,4 +10,16 @@ export class UserService {
   getListUser() {
     return this.http.get('http://localhost:8080/ShopmeAdmin/users', {});
   }
+
+  getListUserRole() {
+    return this.http.get('http://localhost:8080/ShopmeAdmin/users/roles', {});
+  }
+
+  createUser(newUser: any) {
+    return this.http.post(
+      'http://localhost:8080/ShopmeAdmin/users/new',
+      newUser,
+      { responseType: 'text' }
+    );
+  }
 }

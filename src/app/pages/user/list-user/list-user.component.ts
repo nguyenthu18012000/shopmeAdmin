@@ -21,8 +21,4 @@ export class ListUserComponent {
       .getListUser()
       .subscribe((e) => (this.listUser = e as any[]));
   }
-
-  ngAfterViewChecked() {
-    console.log(this.listUser);
-  }
 }

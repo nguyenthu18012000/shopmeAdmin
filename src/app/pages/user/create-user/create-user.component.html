@@ -1,1 +1,102 @@
-<p>create-user works!</p>
+<app-main-layout>
+    <div>
+        <h2>Manager Users | Create new user</h2>
+    </div>
+    <form [formGroup]="createUserForm" style="max-width: 700px; margin: 0 auto;" (ngSubmit)="onSubmit()">		      
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">Email</label>
+                <div class="col-sm-8">
+                    <input id="email" type="email" class="form-control" formControlName="email" required />
+                    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                        class="error">
+                        <div *ngIf="email?.hasError('required')">
+                            Email is required.
+                        </div>
+                        <div *ngIf="email?.hasError('email')">
+                            Must be an email.
+                        </div>
+                        <div *ngIf="email?.hasError('emailAlreadyExist')">
+                            Email is already exist.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">First name</label>
+                <div class="col-sm-8">
+                    <input id="firstName" type="text" class="form-control" formControlName="firstName" />
+                    <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
+                        class="error">
+                        <div *ngIf="firstName?.hasError('required')">
+                            First name is required.
+                        </div>
+                        <div *ngIf="firstName?.hasError('minlength') || firstName?.hasError('maxlength')">
+                            Length must be from 2 to 45 characters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">Last name</label>
+                <div class="col-sm-8">
+                    <input id="lastName" type="text" class="form-control" formControlName="lastName" />
+                    <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+                        class="error">
+                        <div *ngIf="lastName?.hasError('required')">
+                            Last name is required.
+                        </div>
+                        <div *ngIf="lastName?.hasError('minlength') || lastName?.hasError('maxlength')">
+                            Length must be from 2 to 45 characters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                    <input id="password" type="password" class="form-control" formControlName="password" />
+                    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+                        class="error">
+                        <div *ngIf="password?.hasError('required')">
+                            Password is required.
+                        </div>
+                        <div *ngIf="password?.hasError('minlength') || password?.hasError('maxlength')">
+                            Length must be from 8 to 20 characters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">Roles</label>
+                <div class="col-sm-8">
+                    <div *ngFor="let role of listRoles">
+                        
+                        <label class="col-form-label">
+                            <input class="mr-2" [id]="role.id" type="checkbox" [checked]="" (click)="onCheck(role.id)" />
+                            {{role.name}} <small> - {{role.description}}</small>
+                        </label>
+                        
+                    </div>
+                    <div *ngIf="roles?.invalid && (roles?.dirty || roles?.touched)"
+                        class="error">
+                        <div *ngIf="roles?.hasError('required')">
+                            Roles is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">Enabled</label>
+                <div class="col-sm-8">
+                    <input class="mr-2" id="enabled" type="checkbox" formControlName="enabled" />
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Save" class="btn btn-primary m-3"/>
+                <input type="button" value="Cancel" class="btn btn-secondary" (click)="onCancel()"/>
+            </div>
+        </div>
+    </form>
+</app-main-layout>
