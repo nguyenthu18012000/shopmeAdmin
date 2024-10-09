@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ConfigService } from '../services/http.service';
+import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MainLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  constructor(private http: ConfigService) {}
-
-  getaaa() {
-    this.http.get();
-  }
-  title = 'shopmeAdmin';
-}
+export class AppComponent {}

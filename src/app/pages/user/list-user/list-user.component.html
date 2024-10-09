@@ -1,0 +1,45 @@
+<app-main-layout>
+    <div>
+        <h2>Manager Users</h2>
+        <a
+            routerLink="/users/new"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            style="text-decoration: none;"
+            class="fas fa-user-plus fa-2x icon-dark mr-2"
+        >
+            Create new user
+        </a>
+    </div>
+    <div>
+        <table class="table table-bordered table striped table-hover table-responsive-xl">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User ID</th>
+                    <th>Photos</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Roles</th>
+                    <th>Enabled</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of listUser">
+                    <td>{{user.id}}</td>
+                        <td>{{user.photos}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastName}}</td>
+                        <td>
+                            <p *ngFor="let role of user.roles">{{role.name}}</p>
+                        </td>
+                        <td>{{user.enabled}}</td>
+                        <td>edit&nbsp;delete</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</app-main-layout>
