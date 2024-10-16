@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   NgbAlertModule,
   NgbModule,
-  NgbNavConfig,
   NgbPaginationModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',

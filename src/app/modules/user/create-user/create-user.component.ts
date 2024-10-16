@@ -7,11 +7,11 @@ import {
 } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MainLayoutComponent } from '../../../components/main-layout/main-layout.component';
 
-import { RoleValidator } from './validators.directive';
-import { UserService } from '../../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { RoleValidator } from '../../../shared/directives/role-validator.directive';
+import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
 @Component({
   selector: 'app-create-user',
@@ -51,12 +51,6 @@ export class CreateUserComponent {
   });
 
   constructor(private userService: UserService, private router: Router) {}
-
-  ngOnInit() {
-    this.userService
-      .getListUserRole()
-      .subscribe((roles) => (this.listRoles = roles as any[]));
-  }
 
   onSubmit(value: any) {
     this.userService.createUser(this.createUserForm.value).subscribe({

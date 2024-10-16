@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { RoleValidator } from './validators.directive';
-import { UserService } from '../../../../services/user.service';
+import { UserService } from '../../../services/user.service';
+import { RoleValidator } from '../../../shared/directives/role-validator.directive';
 
 @Component({
   selector: 'app-user-form',
@@ -70,7 +70,6 @@ export class UserFormComponent {
   }
 
   ngOnInit() {
-    console.log(this.roles);
     this.userService
       .getListUserRole()
       .subscribe((roles) => (this.listRoles = roles as any[]));
@@ -87,7 +86,6 @@ export class UserFormComponent {
     this.userForm.patchValue({
       roles: newRole,
     });
-    console.log(this.userForm.value.roles);
   }
 
   @Output() formSubmitEvent = new EventEmitter<any>();

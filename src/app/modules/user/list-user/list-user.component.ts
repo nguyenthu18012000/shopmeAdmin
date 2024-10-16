@@ -8,9 +8,10 @@ import {
   faTrash,
   faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from '../../../../services/user.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MainLayoutComponent } from '../../../components/main-layout/main-layout.component';
+
+import { UserService } from '../../../services/user.service';
+import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
 @Component({
   selector: 'app-list-user',

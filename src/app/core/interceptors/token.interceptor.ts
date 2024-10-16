@@ -4,8 +4,8 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

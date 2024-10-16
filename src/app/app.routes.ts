@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { MainLayoutComponent } from './components/main-layout/main-layout.component';
-import { ListUserComponent } from './pages/user/list-user/list-user.component';
-import { CreateUserComponent } from './pages/user/create-user/create-user.component';
-import { HomeComponent } from './pages/home/home.component';
-import { EditUserComponent } from './pages/user/edit-user/edit-user.component';
+
+import { HomeComponent } from './modules/home/home.component';
+import { ListUserComponent } from './modules/user/list-user/list-user.component';
+import { EditUserComponent } from './modules/user/edit-user/edit-user.component';
+import { CreateUserComponent } from './modules/user/create-user/create-user.component';
+import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 
 export const routes: Routes = [
   {

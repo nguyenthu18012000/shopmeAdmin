@@ -8,11 +8,11 @@ import {
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { RegexConstant } from '../../../constants/regex';
-import { UserService } from '../../../../services/user.service';
-import { RoleValidator } from '../create-user/validators.directive';
+import { RegexConstant } from '../../../core/constants/regex';
+import { UserService } from '../../../services/user.service';
 import { UserFormComponent } from '../user-form/user-form.component';
-import { MainLayoutComponent } from '../../../components/main-layout/main-layout.component';
+import { RoleValidator } from '../../../shared/directives/role-validator.directive';
+import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
 @Component({
   selector: 'app-edit-user',
@@ -61,7 +61,6 @@ export class EditUserComponent {
     if (!!userId && this.regexConstants.REGEX_NUMBER_ONLY.test(userId)) {
       this.currentUserId = Number(userId);
       this.userService.getUserById(Number(userId)).subscribe((e: any) => {
-        console.log(e);
         this.editUserForm.controls['email'].setValue(e?.email);
         this.editUserForm.controls['firstName'].setValue(e?.firstName);
         this.editUserForm.controls['lastName'].setValue(e?.lastName);
