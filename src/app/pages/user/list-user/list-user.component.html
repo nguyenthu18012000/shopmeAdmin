@@ -6,7 +6,6 @@
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
             style="text-decoration: none;"
-            class="fas fa-user-plus fa-2x icon-dark mr-2"
         >
             Create new user
         </a>
@@ -28,15 +27,27 @@
             <tbody>
                 <tr *ngFor="let user of listUser">
                     <td>{{user.id}}</td>
-                        <td>{{user.photos}}</td>
-                        <td>{{user.email}}</td>
-                        <td>{{user.firstName}}</td>
-                        <td>{{user.lastName}}</td>
-                        <td>
-                            <p *ngFor="let role of user.roles">{{role.name}}</p>
-                        </td>
-                        <td>{{user.enabled}}</td>
-                        <td>edit&nbsp;delete</td>
+                    <td><fa-icon class="fa-3x icon-silver" [icon]="faPortrait" /></td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>
+                        <p *ngFor="let role of user.roles">{{role.name}}</p>
+                    </td>
+                    <td>
+                        <div *ngIf="user.enabled; else noPG13"><fa-icon class="icon-green" [icon]="faCheckCircle" /></div>
+                        <ng-template #noPG13>
+                            <fa-icon class="icon-dark" [icon]="faCheckCircle" />
+                        </ng-template>
+                    </td>
+                    <td>
+                        <a href="/users/edit/{{user.id}}" title="Edit this user">
+                            <fa-icon class="icon-green" [icon]="faEdit" />
+                        </a>
+                        &nbsp;
+                        <a href=""><fa-icon class="icon-dark" [icon]="faTrash" /></a>
+                        
+                    </td>
                 </tr>
             </tbody>
         </table>

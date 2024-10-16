@@ -21,6 +21,8 @@
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.6",
+    "@fortawesome/angular-fontawesome": "0.15.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0-rc.2",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
