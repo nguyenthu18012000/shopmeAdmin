@@ -35,8 +35,10 @@
                         <p *ngFor="let role of user.roles">{{role.name}}</p>
                     </td>
                     <td>
-                        <div *ngIf="user.enabled; else noPG13"><fa-icon class="icon-green" [icon]="faCheckCircle" /></div>
-                        <ng-template #noPG13>
+                        <div *ngIf="user.enabled; else disabled">
+                            <fa-icon class="icon-green" [icon]="faCheckCircle" />
+                        </div>
+                        <ng-template #disabled>
                             <fa-icon class="icon-dark" [icon]="faCheckCircle" />
                         </ng-template>
                     </td>

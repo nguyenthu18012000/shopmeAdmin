@@ -22,4 +22,14 @@ export class UserService {
       { responseType: 'text' }
     );
   }
+
+  getUserById(id: number) {
+    return this.http.get(`http://localhost:8080/ShopmeAdmin/users/${id}`);
+  }
+
+  editUser(user: any) {
+    return this.http.put('http://localhost:8080/ShopmeAdmin/users/edit', user, {
+      responseType: 'text',
+    });
+  }
 }

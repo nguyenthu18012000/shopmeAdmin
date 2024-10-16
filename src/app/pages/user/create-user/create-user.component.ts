@@ -1,5 +1,3 @@
-import { Component, SimpleChanges } from '@angular/core';
-import { MainLayoutComponent } from '../../../components/main-layout/main-layout.component';
 import {
   FormControl,
   FormGroup,
@@ -7,10 +5,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../../../../services/user.service';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { MainLayoutComponent } from '../../../components/main-layout/main-layout.component';
+
 import { RoleValidator } from './validators.directive';
+import { UserService } from '../../../../services/user.service';
+import { UserFormComponent } from '../user-form/user-form.component';
 
 @Component({
   selector: 'app-create-user',
@@ -19,8 +20,8 @@ import { RoleValidator } from './validators.directive';
     MainLayoutComponent,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule,
     RouterLink,
+    UserFormComponent,
   ],
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss',
@@ -51,37 +52,13 @@ export class CreateUserComponent {
 
   constructor(private userService: UserService, private router: Router) {}
 
-  get email() {
-    return this.createUserForm.get('email');
-  }
-
-  get firstName() {
-    return this.createUserForm.get('firstName');
-  }
-
-  get lastName() {
-    return this.createUserForm.get('lastName');
-  }
-
-  get password() {
-    return this.createUserForm.get('password');
-  }
-
-  get roles() {
-    return this.createUserForm.get('roles');
-  }
-
   ngOnInit() {
     this.userService
       .getListUserRole()
       .subscribe((roles) => (this.listRoles = roles as any[]));
   }
 
-  onSubmit() {
-    if (this.createUserForm.invalid) {
-      this.createUserForm.markAllAsTouched();
-      return;
-    }
+  onSubmit(value: any) {
     this.userService.createUser(this.createUserForm.value).subscribe({
       next: (res) => {
         if (res === 'email is existed') {
@@ -98,18 +75,5 @@ export class CreateUserComponent {
 
   onCancel() {
     this.router.navigate(['/users']);
-  }
-
-  onCheck(id: number) {
-    const roles = this.createUserForm.value.roles ?? [];
-    let newRole;
-    if (roles.includes(id)) {
-      newRole = roles.filter((e) => e !== id);
-    } else {
-      newRole = [...roles, id];
-    }
-    this.createUserForm.patchValue({
-      roles: newRole,
-    });
   }
 }
