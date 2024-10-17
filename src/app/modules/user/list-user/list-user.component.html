@@ -47,7 +47,7 @@
                             <fa-icon class="icon-green" [icon]="faEdit" />
                         </a>
                         &nbsp;
-                        <a href=""><fa-icon class="icon-dark" [icon]="faTrash" /></a>
+                        <fa-icon (click)="onDeleteUser(user.id)" class="icon-dark" [icon]="faTrash" />
                         
                     </td>
                 </tr>

@@ -36,8 +36,19 @@ export class ListUserComponent {
   faCheckCircle = faCheckCircle;
 
   ngOnInit() {
+    this.onGetListUser();
+  }
+
+  onGetListUser() {
     this.userService
       .getListUser()
       .subscribe((e) => (this.listUser = e as any[]));
+  }
+
+  onDeleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe((e) => {
+      console.log(e);
+      this.onGetListUser();
+    });
   }
 }
