@@ -11,6 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { UserService } from '../../../services/user.service';
 import { RoleValidator } from '../../../shared/directives/role-validator.directive';
+import { CommonConstant } from '../../../core/constants/common.constant';
 
 @Component({
   selector: 'app-user-form',
@@ -21,8 +22,13 @@ import { RoleValidator } from '../../../shared/directives/role-validator.directi
 })
 export class UserFormComponent {
   listRoles: any[] = [];
+  thumbnail = 'default-user.png';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private readonly commonConstant: CommonConstant
+  ) {}
 
   @Input() userForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -43,6 +49,7 @@ export class UserFormComponent {
     ]),
     roles: new FormControl([] as number[], [RoleValidator()]),
     enabled: new FormControl(true),
+    photos: new FormControl(''),
   });
 
   onCancel() {
@@ -67,6 +74,10 @@ export class UserFormComponent {
 
   get roles() {
     return this.userForm.get('roles');
+  }
+
+  get photos() {
+    return this.userForm.get('photos');
   }
 
   ngOnInit() {
@@ -95,5 +106,19 @@ export class UserFormComponent {
       return;
     }
     this.formSubmitEvent.emit(this.userForm.value);
+  }
+
+  change(e: any) {
+    console.log(e);
+    const fileSize = e.target?.files[0]?.size;
+    if (fileSize > this.commonConstant.SIZE_1MB) {
+      alert('over size');
+      return;
+    } else {
+      const [file] = e.target.files;
+      if (file) {
+        this.thumbnail = URL.createObjectURL(file);
+      }
+    }
   }
 }
