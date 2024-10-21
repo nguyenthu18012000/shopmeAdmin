@@ -32,8 +32,7 @@ export class EditUserComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private readonly userService: UserService,
-    private readonly regexConstants: RegexConstant
+    private readonly userService: UserService
   ) {}
 
   editUserForm = new FormGroup({
@@ -54,11 +53,12 @@ export class EditUserComponent {
     ]),
     roles: new FormControl([] as number[], [RoleValidator()]),
     enabled: new FormControl(true),
+    photos: new FormControl(''),
   });
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('userId');
-    if (!!userId && this.regexConstants.REGEX_NUMBER_ONLY.test(userId)) {
+    if (!!userId && RegexConstant.REGEX_NUMBER_ONLY.test(userId)) {
       this.currentUserId = Number(userId);
       this.userService.getUserById(Number(userId)).subscribe((e: any) => {
         this.editUserForm.controls['email'].setValue(e?.email);
@@ -73,19 +73,27 @@ export class EditUserComponent {
   }
 
   onSubmit(value: any) {
-    this.userService
-      .editUser({ ...this.editUserForm.value, id: this.currentUserId })
-      .subscribe({
-        next: (res) => {
-          if (res === 'email is existed') {
-            this.editUserForm.controls['email'].setErrors({
-              emailAlreadyExist: true,
-            });
-          } else {
-            this.router.navigate(['/users']);
-          }
-        },
-        error: (err) => {},
-      });
+    const formData = new FormData();
+    formData.append('email', this.editUserForm.value?.email || '');
+    formData.append('firstName', this.editUserForm.value?.firstName || '');
+    formData.append('lastName', this.editUserForm.value?.lastName || '');
+    formData.append('password', this.editUserForm.value?.password || '');
+    formData.append('roles', this.editUserForm.value?.roles?.toString() || '');
+    formData.append('enabled', this.editUserForm.value?.enabled ? '1' : '0');
+    formData.append('image', value?.image);
+    formData.append('id', this.currentUserId.toString());
+
+    this.userService.editUser(formData).subscribe({
+      next: (res) => {
+        if (res === 'email is existed') {
+          this.editUserForm.controls['email'].setErrors({
+            emailAlreadyExist: true,
+          });
+        } else {
+          this.router.navigate(['/users']);
+        }
+      },
+      error: (err) => {},
+    });
   }
 }

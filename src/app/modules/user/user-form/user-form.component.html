@@ -89,6 +89,15 @@
                     <input class="mr-2" id="enabled" type="checkbox" formControlName="enabled" />
                 </div>
             </div>
+
+            <div class="form-group row pb-2">
+                <label class="col-sm-4 col-form-label">Photos</label>
+                <div class="col-sm-8 row">
+                    <input class="col-12 mb-2" type="file" id="userImage" accept="image/png, image/jpeg" formControlName="photos" (change)="change($event)" />
+                    <img class="image-fluid col-4" id="thumbnail" alt="photos preview" [src]="thumbnail" />
+                </div>
+            </div>
+
             <div class="text-center">
                 <input type="submit" value="Save" class="btn btn-primary m-3"/>
                 <input type="button" value="Cancel" class="btn btn-secondary" (click)="onCancel()"/>
