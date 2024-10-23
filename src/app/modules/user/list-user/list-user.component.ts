@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import {
@@ -27,28 +28,48 @@ import { MainLayoutComponent } from '../../../shared/components/main-layout/main
   styleUrl: './list-user.component.scss',
 })
 export class ListUserComponent {
-  constructor(private userService: UserService) {}
-
-  listUser: any[] = [];
   faPortrait = faPortrait;
   faEdit = faEdit;
   faTrash = faTrash;
   faCheckCircle = faCheckCircle;
 
-  ngOnInit() {
-    this.onGetListUser();
-  }
+  listUser: any[] = [];
+  page: number = 1;
+  pageSize: number = 0;
+  totalPage: number = 0;
+  totalItems: number = 0;
 
-  onGetListUser() {
-    this.userService
-      .getListUser()
-      .subscribe((e) => (this.listUser = e as any[]));
+  private pageSubject = new BehaviorSubject<number>(1);
+
+  page$ = this.pageSubject.asObservable();
+
+  constructor(private userService: UserService) {
+    this.page$
+      .pipe(switchMap((page) => this.userService.getListUser(page)))
+      .subscribe((e: any) => {
+        this.listUser = e?.items as any[];
+        this.page = e?.page;
+        this.pageSize = e?.pageSize;
+        this.totalPage = e?.totalPage;
+        this.totalItems = e?.totalItems;
+      });
   }
 
   onDeleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe((e) => {
-      console.log(e);
-      this.onGetListUser();
+    this.userService.deleteUser(id).subscribe((_) => {
+      this.pageSubject.next(1);
     });
+  }
+
+  onChangePage(page: number) {
+    if (page < 1) {
+      this.pageSubject.next(1);
+      return;
+    }
+    if (page > this.totalPage) {
+      this.pageSubject.next(this.totalPage);
+      return;
+    }
+    this.pageSubject.next(page);
   }
 }

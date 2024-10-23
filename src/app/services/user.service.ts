@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getListUser() {
-    return this.http.get('ShopmeAdmin/users', {});
+  getListUser(page: number) {
+    return this.http.get('ShopmeAdmin/user', { params: { page } });
   }
 
   getListUserRole() {

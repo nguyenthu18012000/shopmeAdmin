@@ -53,6 +53,39 @@
                 </tr>
             </tbody>
         </table>
+        <div class="text-center m-1" *ngIf="totalItems > 0">
+            <span>
+                Showing user # {{(page - 1) * pageSize + 1}} to {{page * pageSize}} of {{totalItems}}
+            </span>
+            
+        </div>
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li
+                        class="page-item"
+                        (click)="onChangePage(page - 1)"
+                        [ngClass]="{'disabled': page === 1}"
+                    >
+                        <div class="page-link">Previous</div>
+                    </li>
+                    <li
+                        class="page-item"
+                        *ngFor="let col of [].constructor(totalPage); let c = index"
+                        [ngClass]="{'active': c + 1 === page}"
+                        (click)="onChangePage(c + 1)"
+                    >
+                        <div class="page-link">{{c + 1}}</div>
+                    </li>
+                    <li 
+                        class="page-item"
+                        [ngClass]="{'disabled': page === totalPage}"
+                        (click)="onChangePage(page + 1)"
+                    >
+                        <div class="page-link">Next</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-
 </app-main-layout>
