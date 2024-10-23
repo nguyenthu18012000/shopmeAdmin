@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import {
@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserService } from '../../../services/user.service';
 import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-list-user',
   standalone: true,
@@ -39,13 +40,14 @@ export class ListUserComponent {
   totalPage: number = 0;
   totalItems: number = 0;
 
-  private pageSubject = new BehaviorSubject<number>(1);
+  pageSignal = signal(1);
+  page$ = toObservable(this.pageSignal);
 
-  page$ = this.pageSubject.asObservable();
+  constructor(private userService: UserService) {}
 
-  constructor(private userService: UserService) {
+  ngOnInit() {
     this.page$
-      .pipe(switchMap((page) => this.userService.getListUser(page)))
+      .pipe(switchMap((_) => this.userService.getListUser(this.pageSignal())))
       .subscribe((e: any) => {
         this.listUser = e?.items as any[];
         this.page = e?.page;
@@ -55,21 +57,24 @@ export class ListUserComponent {
       });
   }
 
+  onGetList() {}
+
   onDeleteUser(id: number) {
     this.userService.deleteUser(id).subscribe((_) => {
-      this.pageSubject.next(1);
+      this.pageSignal.set(1);
     });
   }
 
   onChangePage(page: number) {
     if (page < 1) {
-      this.pageSubject.next(1);
+      this.pageSignal.set(1);
       return;
     }
     if (page > this.totalPage) {
-      this.pageSubject.next(this.totalPage);
+      this.pageSignal.set(this.totalPage);
+
       return;
     }
-    this.pageSubject.next(page);
+    this.pageSignal.set(page);
   }
 }
