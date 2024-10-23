@@ -8,10 +8,13 @@ import {
   faEdit,
   faTrash,
   faCheckCircle,
+  faSortUp,
+  faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { UserService } from '../../../services/user.service';
+import { IGetListUserParam } from '../../../core/models/user.model';
 import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
 @Component({
@@ -32,20 +35,28 @@ export class ListUserComponent {
   faEdit = faEdit;
   faTrash = faTrash;
   faCheckCircle = faCheckCircle;
+  faSortUp = faSortUp;
+  faSortDown = faSortDown;
 
   listUser: any[] = [];
   page: number = 1;
   pageSize: number = 0;
   totalPage: number = 0;
   totalItems: number = 0;
+  sortField: string = 'firstName';
+  sortDir: string = 'asc';
 
-  private pageSubject = new BehaviorSubject<number>(1);
+  private pageSubject = new BehaviorSubject<IGetListUserParam>({
+    page: 1,
+    sortField: 'firstName',
+    sortDir: 'asc',
+  });
 
   page$ = this.pageSubject.asObservable();
 
   constructor(private userService: UserService) {
     this.page$
-      .pipe(switchMap((page) => this.userService.getListUser(page)))
+      .pipe(switchMap((params) => this.userService.getListUser(params)))
       .subscribe((e: any) => {
         this.listUser = e?.items as any[];
         this.page = e?.page;
@@ -56,20 +67,41 @@ export class ListUserComponent {
   }
 
   onDeleteUser(id: number) {
+    const value = this.pageSubject.value;
     this.userService.deleteUser(id).subscribe((_) => {
-      this.pageSubject.next(1);
+      this.pageSubject.next({ ...value, page: 1 });
     });
   }
 
   onChangePage(page: number) {
+    const value = this.pageSubject.value;
     if (page < 1) {
-      this.pageSubject.next(1);
+      this.pageSubject.next({ ...value, page: 1 });
       return;
     }
     if (page > this.totalPage) {
-      this.pageSubject.next(this.totalPage);
+      this.pageSubject.next({ ...value, page: this.totalPage });
       return;
     }
-    this.pageSubject.next(page);
+    this.pageSubject.next({ ...value, page: page });
+  }
+
+  onChangeSort(sortFieldClick: string, sortDirClick?: string) {
+    const value = this.pageSubject.value;
+    console.log(value, sortDirClick);
+    if (sortFieldClick === this.sortField && sortDirClick) {
+      this.sortDir = sortDirClick;
+      this.pageSubject.next({ ...value, sortDir: sortDirClick });
+      return;
+    }
+    if (sortFieldClick !== this.sortField) {
+      this.sortField = sortFieldClick;
+      this.sortDir = 'asc';
+      this.pageSubject.next({
+        ...value,
+        sortField: sortFieldClick,
+        sortDir: 'asc',
+      });
+    }
   }
 }

@@ -16,8 +16,18 @@
                 <tr>
                     <th>User ID</th>
                     <th>Photos</th>
-                    <th>Email</th>
-                    <th>First Name</th>
+                    <th (click)="onChangeSort('email', sortDir === 'asc' ? 'desc' : 'asc')">
+                        <span class="me-2">Email</span>
+                        <span *ngIf="sortField === 'email'">
+                            <fa-icon class="icon-silver" [icon]="sortDir === 'asc' ? faSortUp : faSortDown" />
+                        </span>
+                    </th>
+                    <th (click)="onChangeSort('firstName', sortDir === 'asc' ? 'desc' : 'asc')">
+                        <span class="me-2">First Name</span>
+                        <span *ngIf="sortField === 'firstName'">
+                            <fa-icon class="icon-silver" [icon]="sortDir === 'asc' ? faSortUp : faSortDown" />
+                        </span>
+                    </th>
                     <th>Last Name</th>
                     <th>Roles</th>
                     <th>Enabled</th>

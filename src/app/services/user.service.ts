@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { IGetListUserParam } from '../core/models/user.model';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getListUser(page: number) {
-    return this.http.get('ShopmeAdmin/user', { params: { page } });
+  getListUser(params: IGetListUserParam) {
+    return this.http.get('ShopmeAdmin/user', { params: { ...params } });
   }
 
   getListUserRole() {

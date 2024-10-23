@@ -8,9 +8,9 @@ import {
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { RegexConstant } from '../../../core/constants/regex';
 import { UserService } from '../../../services/user.service';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { RegexConstant } from '../../../core/constants/regex.constant';
 import { RoleValidator } from '../../../shared/directives/role-validator.directive';
 import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
