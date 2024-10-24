@@ -20,6 +20,7 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { UserService } from '../../../services/user.service';
+import { ExportUtil } from '../../../shared/utils/export.util';
 import { IGetListUserParam } from '../../../core/models/user.model';
 import { MainLayoutComponent } from '../../../shared/components/main-layout/main-layout.component';
 
@@ -128,5 +129,11 @@ export class ListUserComponent {
     const value = this.pageSubject.value;
     this.searchForm.setValue({ search: '' });
     this.pageSubject.next({ ...value, page: 1, keyword: '' });
+  }
+
+  onExportCSV() {
+    this.userService.exportUserCSV().subscribe((e) => {
+      ExportUtil.exportExcel(e, 'filename');
+    });
   }
 }

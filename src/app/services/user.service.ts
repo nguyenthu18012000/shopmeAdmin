@@ -38,4 +38,10 @@ export class UserService {
       responseType: 'text',
     });
   }
+
+  exportUserCSV() {
+    return this.http.get('ShopmeAdmin/user/export/csv', {
+      responseType: 'blob',
+    });
+  }
 }
