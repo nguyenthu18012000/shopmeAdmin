@@ -1,3 +1,9 @@
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, switchMap } from 'rxjs';
@@ -26,6 +32,8 @@ import { MainLayoutComponent } from '../../../shared/components/main-layout/main
     RouterLink,
     RouterLinkActive,
     FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './list-user.component.html',
   styleUrl: './list-user.component.scss',
@@ -46,10 +54,15 @@ export class ListUserComponent {
   sortField: string = 'firstName';
   sortDir: string = 'asc';
 
+  searchForm: FormGroup = new FormGroup({
+    search: new FormControl(''),
+  });
+
   private pageSubject = new BehaviorSubject<IGetListUserParam>({
     page: 1,
     sortField: 'firstName',
     sortDir: 'asc',
+    keyword: '',
   });
 
   page$ = this.pageSubject.asObservable();
@@ -103,5 +116,17 @@ export class ListUserComponent {
         sortDir: 'asc',
       });
     }
+  }
+
+  onSearch() {
+    const value = this.pageSubject.value;
+    const searchValue = this.searchForm.value?.search;
+    this.pageSubject.next({ ...value, page: 1, keyword: searchValue });
+  }
+
+  onClear() {
+    const value = this.pageSubject.value;
+    this.searchForm.setValue({ search: '' });
+    this.pageSubject.next({ ...value, page: 1, keyword: '' });
   }
 }

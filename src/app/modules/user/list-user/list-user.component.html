@@ -10,6 +10,16 @@
             Create new user
         </a>
     </div>
+
+    <div>
+        <form [formGroup]="searchForm" class="form-inline m-3" (ngSubmit)="onSearch()">
+            Filter:
+            <input type="search" class="form-control" style="width: 300px;" formControlName="search" />
+            <input type="submit" value="Search" class="btn btn-primary"/>
+            <input type="button" value="Clear" class="btn btn-secondary" (click)="onClear()"/>
+        </form>
+    </div>
+
     <div>
         <table class="table table-bordered table striped table-hover table-responsive-xl">
             <thead class="thead-dark">
@@ -63,13 +73,16 @@
                 </tr>
             </tbody>
         </table>
+        <div class="text-center m-1" *ngIf="totalItems <= 0">
+            <span>No data</span>
+        </div>
         <div class="text-center m-1" *ngIf="totalItems > 0">
             <span>
                 Showing user # {{(page - 1) * pageSize + 1}} to {{page * pageSize}} of {{totalItems}}
             </span>
             
         </div>
-        <div>
+        <div *ngIf="totalItems > 0">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li
