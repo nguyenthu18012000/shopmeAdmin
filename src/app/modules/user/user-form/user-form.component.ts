@@ -10,13 +10,20 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { UserService } from '../../../services/user.service';
-import { RoleValidator } from '../../../shared/directives/role-validator.directive';
 import { CommonConstant } from '../../../core/constants/common.constant';
+import { IRuleValidate } from '../../../shared/models/common-input.model';
+import { RoleValidator } from '../../../shared/directives/role-validator.directive';
+import { CommonInputComponent } from '../../../shared/components/common-input/common-input.component';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    CommonInputComponent,
+  ],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
 })
@@ -53,9 +60,39 @@ export class UserFormComponent {
     this.router.navigate(['/users']);
   }
 
+  errorEmail: Array<IRuleValidate> = [
+    {
+      rule: 'required',
+      errorMessage: 'Email is required.',
+    },
+    {
+      rule: 'email',
+      errorMessage: 'Must be an email.',
+    },
+    {
+      rule: 'emailAlreadyExist',
+      errorMessage: 'Email is already exist.',
+    },
+  ];
+
   get email() {
     return this.userForm.get('email');
   }
+
+  errorName: Array<IRuleValidate> = [
+    {
+      rule: 'required',
+      errorMessage: 'First name is required.',
+    },
+    {
+      rule: 'minlength',
+      errorMessage: 'Length must be from 2 to 45 characters.',
+    },
+    {
+      rule: 'maxlength',
+      errorMessage: 'Length must be from 2 to 45 characters.',
+    },
+  ];
 
   get firstName() {
     return this.userForm.get('firstName');
@@ -64,6 +101,21 @@ export class UserFormComponent {
   get lastName() {
     return this.userForm.get('lastName');
   }
+
+  errorPassword: Array<IRuleValidate> = [
+    {
+      rule: 'required',
+      errorMessage: 'Password is required.',
+    },
+    {
+      rule: 'minlength',
+      errorMessage: 'Length must be from 8 to 20 characters.',
+    },
+    {
+      rule: 'maxlength',
+      errorMessage: 'Length must be from 8 to 20 characters.',
+    },
+  ];
 
   get password() {
     return this.userForm.get('password');
