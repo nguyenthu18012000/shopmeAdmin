@@ -8,9 +8,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(loginForm: any) {
-    return this.http.post(
-      'http://localhost:8080/ShopmeAdmin/auth/login',
-      loginForm
-    );
+    return this.http.post('ShopmeAdmin/auth/login', loginForm);
   }
 }

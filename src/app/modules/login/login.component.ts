@@ -7,7 +7,9 @@ import {
 } from '@angular/forms';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../services/auth.service';
+import { AuthCoreService } from '../../core/services/auth-core.service';
 
 @Component({
   selector: 'app-login',
@@ -37,8 +39,14 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.authService
-      .login(this.loginForm.value)
-      .subscribe((e) => console.log(e));
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (e: any) => {
+        console.log(e?.access_token);
+        AuthCoreService.setAccessToken(e?.access_token);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
   }
 }
