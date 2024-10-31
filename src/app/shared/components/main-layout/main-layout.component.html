@@ -53,6 +53,7 @@
     <div>
        <ng-content />
     </div>
+    <app-pagination [current]="current" [total]="total" (goTo)="onGoTo($event)"></app-pagination>
     
     <div class="text-center">
         <p>Shopme Control Panel - Copyright &copy; Shopme</p>

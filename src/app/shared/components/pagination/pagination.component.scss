@@ -1,0 +1,88 @@
+$main-color: #f0f0f0;
+$secondary-color: #1d1f20;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+// body {
+//   color: #fff;
+//   background: #949c4e;
+//   background: linear-gradient(
+//     115deg,
+//     rgba(86, 216, 228, 1) 10%,
+//     rgba(159, 1, 234, 1) 90%
+//   );
+//   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+//     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,
+//     sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+
+// html,
+// body {
+//   min-height: 100vh;
+// }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 4px;
+}
+
+ul, li {
+    list-style: none;
+    display: inline;
+    padding-left: 0px;
+    user-select: none;
+}
+
+li {
+    counter-increment: pagination;
+    &:hover {
+        a {
+            color: lighten($main-color, 5%);
+            background-color: $secondary-color;
+            border: solid 1px $secondary-color;
+        }
+    }
+    &.active {
+        a {
+            color: lighten($main-color, 5%);
+            background-color: $secondary-color;
+            border: solid 1px $secondary-color;
+        }
+    }
+    &:nth-child(2) {
+        counter-reset: pagination;
+    }
+    a {
+        border: solid 1px darken($main-color, 10%);
+        border-radius: 0.2rem;
+        color: darken($main-color, 45%);
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline-block;
+        text-align: center;
+        padding: 0.5rem 0.9rem;
+    }
+    button {
+        border: solid 1px darken($main-color, 10%);
+        border-radius: 0.2rem;
+        color: darken($main-color, 45%);
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline-block;
+        text-align: center;
+        padding: 0.5rem 0.9rem;
+        background-color: white;
+    }
+}
