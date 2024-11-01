@@ -28,12 +28,12 @@ export class TokenInterceptor implements HttpInterceptor {
     const accessToken = isPlatformBrowser(platformId)
       ? AuthCoreService.getAccessToken()
       : '';
-    request = request.clone({
-      url: `${this.baseUrl}${request.url}`,
-      setHeaders: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    // request = request.clone({
+    //   url: `${this.baseUrl}${request.url}`,
+    //   setHeaders: {
+    //     Authorization: `Bearer ${accessToken}`,
+    //   },
+    // });
 
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {

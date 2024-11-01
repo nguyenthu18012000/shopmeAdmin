@@ -14,7 +14,6 @@ export class AuthCoreService {
 
   static getAccessToken() {
     const data = localStorage.getItem(LocalStorageConstant.ACCESS_TOKEN);
-    console.log(data);
     return data || null;
   }
 

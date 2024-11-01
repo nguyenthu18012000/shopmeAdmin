@@ -1,0 +1,74 @@
+#mySidenav a {
+    position: absolute;
+    left: -90px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 120px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  #mySidenav a:hover {
+    left: 0;
+  }
+  
+  #about {
+    top: 20px;
+    background-color: #04AA6D;
+  }
+  
+  #blog {
+    top: 80px;
+    background-color: #2196F3;
+  }
+  
+  #projects {
+    top: 140px;
+    background-color: #f44336;
+  }
+  
+  #contact {
+    top: 200px;
+    background-color: #555
+  }
+
+.side-nav {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+
+    
+    .nav-bar-menu {
+        position: relative;
+        height: 30px;
+        
+        .side-nav-item {
+            background-color: red;
+            position: absolute;
+            left: -90px;
+            transition: 0.3s;
+            // padding: 15px;
+            width: 120px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            color: black;
+            display: flex;
+
+            .side-bav-item-title {
+                display: none;
+            }
+    
+            &:hover {
+                left: 0;
+                .side-bav-item-title {
+                    display: block;
+                }
+            }
+        }
+    }
+
+}
