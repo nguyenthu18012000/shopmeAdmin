@@ -2,42 +2,34 @@
     <a class="navbar-brand" routerLink="/">
         <img src="ShopmeAdminBig.png" />
     </a>
-
+    
     <form 
-        [formGroup]="loginForm"
-        style="max-width: 350px; margin: 0 auto;"
-        (ngSubmit)="onSubmit()"
-    >	
+    [formGroup]="loginForm"
+    style="max-width: 350px; margin: 0 auto;"
+    (ngSubmit)="onSubmit()"
+    >
         <div class="border border-secondary rounded p-3">
             <p>Access to Shopme Control Panel</p>
             <div class="pb-2">
-                <input id="email" type="email" class="form-control" formControlName="email" placeholder="Email" />
-                <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-                    class="error">
-                    <div *ngIf="email?.hasError('required')">
-                        Email is required.
-                    </div>
-                    <div *ngIf="email?.hasError('email')">
-                        Must be an email.
-                    </div>
-                    <div *ngIf="email?.hasError('emailAlreadyExist')">
-                        Email is already exist.
-                    </div>
-                </div>
+                <app-common-input
+                    type="email" 
+                    formControlName="email"
+                    [value]="loginForm.get('email')?.value"
+                    placeholder="Email"
+                    [inputControl]="email"
+                    [ruleValidators]="errorEmail"
+                ></app-common-input>
             </div>
 
             <div>
-
-                <input id="password" type="password" class="form-control" formControlName="password" placeholder="Password" />
-                <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-                    class="error">
-                    <div *ngIf="password?.hasError('required')">
-                        Password is required.
-                    </div>
-                    <div *ngIf="password?.hasError('minlength') || password?.hasError('maxlength')">
-                        Length must be from 8 to 20 characters.
-                    </div>
-                </div>
+                <app-common-input
+                    type="password" 
+                    formControlName="password"
+                    [value]="loginForm.get('password')?.value"
+                    placeholder="Password"
+                    [inputControl]="password"
+                    [ruleValidators]="errorPassword"
+                ></app-common-input>
             </div>
 
             <div class="text-center">

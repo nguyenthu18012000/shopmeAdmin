@@ -1,0 +1,19 @@
+<div class="custom-input">
+    <label>{{ label }}</label>
+    <input
+        [type]="type"
+        [value]="value"
+        [placeholder]="placeholder"
+        (input)="onInput($event)"
+    />
+    <div
+        *ngIf="inputControl?.invalid && (inputControl?.dirty || inputControl?.touched)"
+        class="error"
+    >
+        <div *ngFor="let ruleValidator of ruleValidators">
+            <div *ngIf="inputControl?.hasError(ruleValidator?.rule || '')">
+                {{ruleValidator?.errorMessage}}
+            </div>
+        </div>
+    </div>
+</div>

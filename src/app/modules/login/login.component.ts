@@ -1,4 +1,5 @@
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
@@ -9,12 +10,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthService } from '../../services/auth.service';
+import { IRuleValidate } from '../../shared/models/common-input.model';
 import { AuthCoreService } from '../../core/services/auth-core.service';
+import { CommonInputComponent } from '../../shared/components/common-input/common-input.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    CommonInputComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -30,11 +38,41 @@ export class LoginComponent {
 
   constructor(private readonly authService: AuthService) {}
 
-  get email() {
+  errorEmail: Array<IRuleValidate> = [
+    {
+      rule: 'required',
+      errorMessage: 'Email is required.',
+    },
+    {
+      rule: 'email',
+      errorMessage: 'Must be an email.',
+    },
+    {
+      rule: 'emailAlreadyExist',
+      errorMessage: 'Email is already exist.',
+    },
+  ];
+
+  get email(): AbstractControl<any, any> | null {
     return this.loginForm.get('email');
   }
 
-  get password() {
+  errorPassword: Array<IRuleValidate> = [
+    {
+      rule: 'required',
+      errorMessage: 'Password is required.',
+    },
+    {
+      rule: 'minlength',
+      errorMessage: 'Length must be from 8 to 20 characters.',
+    },
+    {
+      rule: 'maxlength',
+      errorMessage: 'Length must be from 8 to 20 characters.',
+    },
+  ];
+
+  get password(): AbstractControl<any, any> | null {
     return this.loginForm.get('password');
   }
 
